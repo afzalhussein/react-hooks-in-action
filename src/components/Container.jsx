@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import TextBox from "./components/TextBox";
+import TextBox from "./TextBox";
 
 export default function Container() {
   const [current, setCurrent] = useState(0);
