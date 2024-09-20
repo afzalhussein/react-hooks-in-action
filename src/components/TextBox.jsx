@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 
-export default function TextBox({ data, display = true }) {
+function TextBox({ data, display = true }) {
   const styles = { display: "flex", justifyContent: "space-between" };
-  const [show, hide] = useState(display);
+  const [ show, hide ] = useState( display );
+  console.log( 'TextBox rendered' );
   return (
     <>
       <div style={styles} className="title">
@@ -13,3 +14,4 @@ export default function TextBox({ data, display = true }) {
     </>
   );
 }
+export default memo( TextBox );

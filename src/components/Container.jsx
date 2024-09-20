@@ -1,32 +1,20 @@
-import React, { useState } from "react";
-import TextBox from "./TextBox";
+import React, { useState, useMemo } from "react";
+import { quizzes } from "../service/quizzes";
+import TopBar from "./TopBar";
+import Quiz from "./Quiz";
+import { QuizContext } from "./QuizContext";
 
-export default function Container() {
-  const [current, setCurrent] = useState(0);
-  const quizzes = [
-    [
-      { title: "Question", description: "First question" },
-      { title: "Answer", description: "First answer" },
-    ],
-    [
-      { title: "Question", description: "Second question" },
-      { title: "Answer", description: "Second answer" },
-    ],
-  ];
-  const [question, answer] = quizzes[current];
+export default function Container () {
+  const [ current, setCurrent ] = useState( 0 );
+
+  const [ question, answer ] = useMemo( () => { return quizzes[ current ] }, [ current ] );
   const styles = { display: "flex", justifyContent: "space-between" };
   return (
-    <>
-      <div style={styles}>
-        {current + 1} of {quizzes.length}
-        <button onClick={() => setCurrent((current + 1) % quizzes.length)}>
-          Next
-        </button>
-      </div>
+    <QuizContext.Provider value={ quizzes }>
+      <TopBar styles={ styles } current={ current } setCurrent={ setCurrent } />
       <hr />
-      <TextBox data={question} display={true} />
-      <hr />
-      <TextBox data={answer} display={false} />
-    </>
+      <Quiz question={ question } answer={ answer } />
+    </QuizContext.Provider>
   );
 }
+
